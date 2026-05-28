@@ -27,7 +27,6 @@
     cursor: none;
   }
 
-  /* ── GRAIN OVERLAY ── */
   body::before {
     content: '';
     position: fixed;
@@ -38,7 +37,42 @@
     opacity: 0.4;
   }
 
-  /* ── SLIDESHOW CONTAINER ── */
+  /* ── LOADING SCREEN ── */
+  #loading {
+    position: fixed;
+    inset: 0;
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    gap: 24px;
+    transition: opacity 1s ease;
+  }
+  #loading.hidden { opacity: 0; pointer-events: none; }
+  #loading .load-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+  }
+  #loading .load-sub {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    color: rgba(245,237,214,0.5);
+    font-size: 1rem;
+  }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 3px solid rgba(201,149,42,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── SLIDESHOW ── */
   #slideshow {
     position: relative;
     width: 100vw;
@@ -54,8 +88,7 @@
     align-items: center;
     justify-content: center;
   }
-
-  .slide.active { opacity: 1; }
+  .slide.active { opacity: 1; z-index: 10; }
 
   /* ── PHOTO SLIDES ── */
   .slide-photo .photo-bg {
@@ -76,8 +109,8 @@
     max-width: 560px;
     border-left: 5px solid var(--gold);
     padding-left: 24px;
+    z-index: 2;
   }
-
   .slide-photo .caption-year {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.1rem;
@@ -85,7 +118,6 @@
     color: var(--gold);
     margin-bottom: 6px;
   }
-
   .slide-photo .caption-text {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
@@ -94,26 +126,35 @@
     text-shadow: 0 2px 20px rgba(0,0,0,0.8);
   }
 
+  /* photo counter badge */
+  .photo-count-badge {
+    position: absolute;
+    top: 24px;
+    right: 36px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: rgba(201,149,42,0.6);
+    z-index: 2;
+  }
+
   /* ── TITLE SLIDE ── */
   .slide-title {
     background: radial-gradient(ellipse at 30% 40%, #2a1a05 0%, var(--dark) 70%);
     flex-direction: column;
     text-align: center;
   }
-
   .slide-title .beer-rings {
     position: absolute;
     inset: 0;
     overflow: hidden;
     opacity: 0.07;
   }
-
   .ring {
     position: absolute;
     border-radius: 50%;
     border: 2px solid var(--gold);
   }
-
   .slide-title .main-number {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(18vw, 22vw, 320px);
@@ -123,7 +164,6 @@
     letter-spacing: -0.02em;
     position: relative;
   }
-
   .slide-title .main-number::after {
     content: '75';
     position: absolute;
@@ -133,7 +173,6 @@
     -webkit-text-stroke: 0;
     transform: translate(4px, 4px);
   }
-
   .slide-title .subtitle {
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -142,7 +181,6 @@
     margin-top: 12px;
     letter-spacing: 0.05em;
   }
-
   .slide-title .name-line {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(2.5rem, 6vw, 5rem);
@@ -153,7 +191,6 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
   .slide-title .date-line {
     font-family: 'Libre Baskerville', serif;
     font-style: italic;
@@ -163,7 +200,6 @@
     margin-top: 16px;
   }
 
-  /* decorative divider */
   .divider {
     display: flex;
     align-items: center;
@@ -172,31 +208,16 @@
     width: fit-content;
   }
   .divider-line { width: 80px; height: 1px; background: var(--gold); opacity: 0.6; }
-  .divider-diamond {
-    width: 8px; height: 8px;
-    background: var(--gold);
-    transform: rotate(45deg);
-  }
+  .divider-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
 
   /* ── TRIBUTE SLIDE ── */
   .slide-tribute {
     background: linear-gradient(160deg, #0a1a3a 0%, #001a4a 50%, #0d1225 100%);
   }
-
-  .slide-tribute .stripe-bar {
-    position: absolute;
-    left: 0; right: 0;
-    height: 8px;
-  }
+  .slide-tribute .stripe-bar { position: absolute; left: 0; right: 0; height: 8px; }
   .slide-tribute .stripe-bar.top { top: 0; background: linear-gradient(90deg, var(--bills-red) 50%, var(--bills-blue) 50%); }
   .slide-tribute .stripe-bar.bottom { bottom: 0; background: linear-gradient(90deg, var(--bills-blue) 50%, var(--bills-red) 50%); }
-
-  .tribute-content {
-    text-align: center;
-    padding: 60px;
-    max-width: 900px;
-  }
-
+  .tribute-content { text-align: center; padding: 60px; max-width: 900px; }
   .tribute-content .tribute-label {
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.4em;
@@ -204,7 +225,6 @@
     color: var(--bills-red);
     margin-bottom: 12px;
   }
-
   .tribute-content .tribute-title {
     font-family: 'Playfair Display', serif;
     font-size: clamp(2rem, 5vw, 4rem);
@@ -213,12 +233,7 @@
     margin-bottom: 28px;
     color: var(--cream);
   }
-
-  .tribute-content .tribute-title span {
-    color: var(--gold);
-    font-style: italic;
-  }
-
+  .tribute-content .tribute-title span { color: var(--gold); font-style: italic; }
   .tribute-content .tribute-body {
     font-size: clamp(1rem, 2vw, 1.35rem);
     line-height: 1.9;
@@ -227,33 +242,14 @@
   }
 
   /* ── FACTS SLIDE ── */
-  .slide-facts {
-    background: var(--dark);
-    position: relative;
-    overflow: hidden;
-  }
-
+  .slide-facts { background: var(--dark); position: relative; overflow: hidden; }
   .slide-facts::before {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 59px,
-        rgba(201,149,42,0.06) 60px
-      );
+    background: repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,149,42,0.06) 60px);
   }
-
-  .facts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-    width: 100%;
-    height: 100%;
-  }
-
+  .facts-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; width: 100%; height: 100%; }
   .fact-cell {
     display: flex;
     flex-direction: column;
@@ -262,127 +258,35 @@
     padding: 40px 30px;
     border: 1px solid rgba(201,149,42,0.15);
     text-align: center;
-    transition: background 0.3s;
-    position: relative;
-    overflow: hidden;
   }
+  .fact-cell .fact-icon { font-size: 2.5rem; margin-bottom: 16px; }
+  .fact-cell .fact-number { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5.5rem); color: var(--gold); line-height: 1; }
+  .fact-cell .fact-label { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: clamp(0.8rem, 1.5vw, 1.1rem); color: rgba(245,237,214,0.7); margin-top: 8px; }
+  .fact-cell.highlight { background: rgba(201,149,42,0.07); }
 
-  .fact-cell .fact-icon {
-    font-size: 2.5rem;
-    margin-bottom: 16px;
-    filter: grayscale(0.2);
-  }
-
-  .fact-cell .fact-number {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .fact-cell .fact-label {
-    font-family: 'Libre Baskerville', serif;
-    font-style: italic;
-    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
-    color: rgba(245,237,214,0.7);
-    margin-top: 8px;
-    letter-spacing: 0.05em;
-  }
-
-  .fact-cell.highlight {
-    background: rgba(201,149,42,0.07);
-  }
-
-  /* ── HOCKEY / CLARKSON SLIDE ── */
-  .slide-clarkson {
-    background: linear-gradient(145deg, #1a0a00 0%, #2d1500 40%, #1a0a00 100%);
-    overflow: hidden;
-  }
-
-  .slide-clarkson .puck-pattern {
-    position: absolute;
-    inset: 0;
-    opacity: 0.04;
-    background-image: radial-gradient(circle, #fff 2px, transparent 2px);
-    background-size: 40px 40px;
-  }
-
-  .clarkson-content {
-    display: flex;
-    align-items: center;
-    gap: 80px;
-    padding: 60px;
-    max-width: 1200px;
-  }
-
-  .clarkson-left {
-    flex: 1;
-  }
-
+  /* ── CLARKSON SLIDE ── */
+  .slide-clarkson { background: linear-gradient(145deg, #1a0a00 0%, #2d1500 40%, #1a0a00 100%); overflow: hidden; }
+  .slide-clarkson .puck-pattern { position: absolute; inset: 0; opacity: 0.04; background-image: radial-gradient(circle, #fff 2px, transparent 2px); background-size: 40px 40px; }
+  .clarkson-content { display: flex; align-items: center; gap: 80px; padding: 60px; max-width: 1200px; }
   .clarkson-badge {
-    width: 220px;
-    height: 220px;
+    width: 220px; height: 220px;
     border-radius: 50%;
     border: 4px solid var(--gold);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     background: radial-gradient(circle at center, #2d1500, #1a0a00);
     box-shadow: 0 0 60px rgba(201,149,42,0.3), inset 0 0 40px rgba(0,0,0,0.5);
     flex-shrink: 0;
   }
-
   .clarkson-badge .badge-emoji { font-size: 3.5rem; }
-  .clarkson-badge .badge-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    margin-top: 8px;
-  }
-  .clarkson-badge .badge-sub {
-    font-size: 0.7rem;
-    color: rgba(201,149,42,0.6);
-    letter-spacing: 0.15em;
-    margin-top: 2px;
-  }
-
-  .clarkson-right .section-tag {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.4em;
-    font-size: 0.85rem;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-
-  .clarkson-right h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4.5vw, 3.8rem);
-    line-height: 1.1;
-    color: var(--cream);
-    margin-bottom: 24px;
-  }
-
-  .clarkson-right h2 em {
-    color: var(--gold);
-    font-style: italic;
-  }
-
-  .clarkson-right p {
-    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
-    line-height: 1.9;
-    color: rgba(245,237,214,0.8);
-    font-style: italic;
-  }
+  .clarkson-badge .badge-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.2em; color: var(--gold); margin-top: 8px; }
+  .clarkson-badge .badge-sub { font-size: 0.7rem; color: rgba(201,149,42,0.6); letter-spacing: 0.15em; margin-top: 2px; }
+  .clarkson-right .section-tag { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.4em; font-size: 0.85rem; color: var(--gold); margin-bottom: 10px; }
+  .clarkson-right h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.8rem); line-height: 1.1; color: var(--cream); margin-bottom: 24px; }
+  .clarkson-right h2 em { color: var(--gold); font-style: italic; }
+  .clarkson-right p { font-size: clamp(0.9rem, 1.8vw, 1.2rem); line-height: 1.9; color: rgba(245,237,214,0.8); font-style: italic; }
 
   /* ── FAMILY SLIDE ── */
-  .slide-family {
-    background: radial-gradient(ellipse at center, #1a0800 0%, #0d0500 100%);
-    text-align: center;
-    flex-direction: column;
-  }
-
+  .slide-family { background: radial-gradient(ellipse at center, #1a0800 0%, #0d0500 100%); text-align: center; flex-direction: column; }
   .slide-family .family-quote {
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -393,9 +297,7 @@
     padding: 0 60px;
     position: relative;
   }
-
-  .slide-family .family-quote::before,
-  .slide-family .family-quote::after {
+  .slide-family .family-quote::before, .slide-family .family-quote::after {
     font-family: 'Playfair Display', serif;
     font-size: 8rem;
     color: var(--gold);
@@ -405,16 +307,46 @@
   }
   .slide-family .family-quote::before { content: '\201C'; top: 40px; left: 20px; }
   .slide-family .family-quote::after { content: '\201D'; bottom: -20px; right: 20px; }
+  .slide-family .family-sub { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.3em; color: var(--gold); font-size: 1rem; margin-top: 40px; }
 
-  .slide-family .family-sub {
+  /* ── BILLS SLIDE ── */
+  .slide-bills { background: linear-gradient(135deg, var(--bills-blue) 0%, #001a5c 40%, #1a0008 100%); overflow: hidden; }
+  .slide-bills .bills-stripe { position: absolute; left: 0; right: 0; height: 6px; background: var(--bills-red); }
+  .slide-bills .bills-stripe.top { top: 0; }
+  .slide-bills .bills-stripe.bottom { bottom: 0; }
+  .bills-content { text-align: center; padding: 60px; }
+  .bills-content .bills-emoji { font-size: 5rem; margin-bottom: 20px; display: block; }
+  .bills-content h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 7vw, 6rem); letter-spacing: 0.1em; color: white; text-shadow: 3px 3px 0 var(--bills-red); margin-bottom: 12px; }
+  .bills-content p { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1rem, 2.5vw, 1.8rem); color: rgba(255,255,255,0.8); max-width: 700px; line-height: 1.7; margin: 0 auto; }
+
+  /* ── SECTION INTRO SLIDE ── */
+  .slide-section-intro {
+    background: var(--dark);
+    flex-direction: column;
+    text-align: center;
+  }
+  .section-intro-label {
     font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.5em;
+    font-size: 0.9rem;
     color: var(--gold);
-    font-size: 1rem;
-    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  .section-intro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--cream);
+    font-style: italic;
+  }
+  .section-intro-sub {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    color: rgba(245,237,214,0.5);
+    font-size: 1.1rem;
+    margin-top: 20px;
   }
 
-  /* ── PERSISTENT UI ── */
+  /* ── UI CHROME ── */
   #top-bar {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -422,7 +354,6 @@
     background: linear-gradient(90deg, var(--bills-red), var(--gold), var(--bills-blue));
     z-index: 500;
   }
-
   #progress-bar {
     position: fixed;
     bottom: 0; left: 0;
@@ -432,7 +363,6 @@
     transition: width 0.1s linear;
     opacity: 0.7;
   }
-
   #slide-counter {
     position: fixed;
     bottom: 24px;
@@ -444,332 +374,258 @@
     z-index: 500;
   }
 
-  /* ── PLACEHOLDER PHOTO SLIDES ── */
-  .photo-placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-    background: linear-gradient(135deg, #1a1208, #2a1e0a);
-    font-family: 'Libre Baskerville', serif;
-    font-style: italic;
-    color: rgba(201,149,42,0.4);
-    font-size: 1.1rem;
-    text-align: center;
-    padding: 40px;
-  }
-
-  .photo-placeholder .placeholder-icon { font-size: 4rem; opacity: 0.3; }
-  .photo-placeholder .placeholder-instructions {
-    font-size: 0.85rem;
-    max-width: 400px;
-    line-height: 1.7;
-    color: rgba(201,149,42,0.3);
-  }
-
-  /* ── BILLS SLIDE ── */
-  .slide-bills {
-    background: linear-gradient(135deg, var(--bills-blue) 0%, #001a5c 40%, #1a0008 100%);
-    overflow: hidden;
-  }
-
-  .slide-bills .bills-stripe {
-    position: absolute;
-    left: 0; right: 0;
-    height: 6px;
-    background: var(--bills-red);
-  }
-  .slide-bills .bills-stripe.top { top: 0; }
-  .slide-bills .bills-stripe.bottom { bottom: 0; }
-
-  .bills-content {
-    text-align: center;
-    padding: 60px;
-  }
-
-  .bills-content .bills-emoji { font-size: 5rem; margin-bottom: 20px; display: block; }
-
-  .bills-content h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 7vw, 6rem);
-    letter-spacing: 0.1em;
-    color: white;
-    text-shadow: 3px 3px 0 var(--bills-red);
-    margin-bottom: 12px;
-  }
-
-  .bills-content p {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(1rem, 2.5vw, 1.8rem);
-    color: rgba(255,255,255,0.8);
-    max-width: 700px;
-    line-height: 1.7;
-    margin: 0 auto;
-  }
-
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   .slide.active .caption-box,
   .slide.active .tribute-content,
   .slide.active .clarkson-content,
   .slide.active .bills-content,
   .slide.active .family-quote,
   .slide.active .family-sub,
-  .slide.active .facts-grid {
+  .slide.active .facts-grid,
+  .slide.active .section-intro-label,
+  .slide.active .section-intro-title,
+  .slide.active .section-intro-sub {
     animation: fadeUp 1.2s ease-out both;
     animation-delay: 0.3s;
   }
-
-  .slide.active .main-number {
-    animation: fadeUp 0.8s ease-out both;
-  }
-
-  .slide.active .subtitle,
-  .slide.active .name-line {
-    animation: fadeUp 0.8s ease-out both;
-    animation-delay: 0.5s;
-  }
-
-  .slide.active .date-line {
-    animation: fadeUp 0.8s ease-out both;
-    animation-delay: 0.9s;
-  }
+  .slide.active .main-number { animation: fadeUp 0.8s ease-out both; }
+  .slide.active .subtitle, .slide.active .name-line { animation: fadeUp 0.8s ease-out both; animation-delay: 0.5s; }
+  .slide.active .date-line { animation: fadeUp 0.8s ease-out both; animation-delay: 0.9s; }
 </style>
 </head>
 <body>
 
+<div id="loading">
+  <div class="load-title">JP's 75th</div>
+  <div class="spinner"></div>
+  <div class="load-sub">Loading photos…</div>
+</div>
+
 <div id="top-bar"></div>
 <div id="progress-bar"></div>
 <div id="slide-counter"></div>
-
-<div id="slideshow">
-
-  <!-- SLIDE 1: TITLE -->
-  <div class="slide slide-title active" data-duration="8000">
-    <div class="beer-rings">
-      <div class="ring" style="width:400px;height:400px;top:-100px;left:-100px;"></div>
-      <div class="ring" style="width:600px;height:600px;top:200px;right:-200px;"></div>
-      <div class="ring" style="width:250px;height:250px;bottom:50px;left:200px;"></div>
-    </div>
-    <div style="position:relative;z-index:2;text-align:center;">
-      <div class="main-number">75</div>
-      <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-diamond"></div>
-        <div class="divider-line"></div>
-      </div>
-      <div class="subtitle">Celebrating a Life Well Lived</div>
-      <div class="name-line">Happy Birthday, JP</div>
-      <div class="date-line">🍺 &nbsp; Pour one out for 75 years &nbsp; 🍺</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 2: FACTS -->
-  <div class="slide slide-facts" data-duration="9000">
-    <div class="facts-grid">
-      <div class="fact-cell highlight">
-        <div class="fact-icon">🎂</div>
-        <div class="fact-number">75</div>
-        <div class="fact-label">Years of stories,<br>wisdom & laughs</div>
-      </div>
-      <div class="fact-cell">
-        <div class="fact-icon">🏒</div>
-        <div class="fact-number">TΔΚ</div>
-        <div class="fact-label">Tau Delta Kappa<br>Clarkson Golden Knights</div>
-      </div>
-      <div class="fact-cell highlight">
-        <div class="fact-icon">🏈</div>
-        <div class="fact-number">1</div>
-        <div class="fact-label">True Bills fan —<br>through it all</div>
-      </div>
-      <div class="fact-cell">
-        <div class="fact-icon">🍺</div>
-        <div class="fact-number">∞</div>
-        <div class="fact-label">Cold ones shared<br>with good people</div>
-      </div>
-      <div class="fact-cell highlight">
-        <div class="fact-icon">👨‍👩‍👧‍👦</div>
-        <div class="fact-number">1st</div>
-        <div class="fact-label">The greatest gift:<br>family, all together</div>
-      </div>
-      <div class="fact-cell">
-        <div class="fact-icon">🎉</div>
-        <div class="fact-number">75</div>
-        <div class="fact-label">Reasons to celebrate<br>tonight</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 3: PHOTO PLACEHOLDER 1 -->
-  <div class="slide slide-photo" data-duration="7000">
-    <div class="photo-placeholder">
-      <div class="placeholder-icon">📷</div>
-      <div style="font-size:1.3rem; color:rgba(201,149,42,0.5);">[ Add Your Photo Here ]</div>
-      <div class="placeholder-instructions">
-        To add photos: set <code>background-image: url('your-photo.jpg')</code><br>
-        on the <code>.photo-bg</code> div inside this slide.<br>
-        Photos should be in the same folder as this HTML file.
-      </div>
-    </div>
-    <div class="caption-box">
-      <div class="caption-year">EARLY YEARS</div>
-      <div class="caption-text">Where it all began…</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 4: BILLS TRIBUTE -->
-  <div class="slide slide-bills" data-duration="8000">
-    <div class="bills-stripe top"></div>
-    <div class="bills-stripe bottom"></div>
-    <div class="bills-content">
-      <span class="bills-emoji">🦬</span>
-      <h2>Bills Mafia Forever</h2>
-      <p>
-        Through the highs, the heartbreaks, and every fourth-quarter comeback —
-        a Bills fan's loyalty is a rare and beautiful thing.
-        This one never wavered.
-      </p>
-    </div>
-  </div>
-
-  <!-- SLIDE 5: PHOTO PLACEHOLDER 2 -->
-  <div class="slide slide-photo" data-duration="7000">
-    <div class="photo-placeholder">
-      <div class="placeholder-icon">📷</div>
-      <div style="font-size:1.3rem; color:rgba(201,149,42,0.5);">[ Add Your Photo Here ]</div>
-      <div class="placeholder-instructions">Replace this slide's background with a family photo</div>
-    </div>
-    <div class="caption-box">
-      <div class="caption-year">FAMILY</div>
-      <div class="caption-text">The people who made it all worthwhile</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 6: CLARKSON / HOCKEY -->
-  <div class="slide slide-clarkson" data-duration="9000">
-    <div class="puck-pattern"></div>
-    <div class="clarkson-content">
-      <div class="clarkson-badge">
-        <div class="badge-emoji">🏒</div>
-        <div class="badge-text">CLARKSON</div>
-        <div class="badge-sub">GOLDEN KNIGHTS</div>
-      </div>
-      <div class="clarkson-right">
-        <div class="section-tag">⬥ &nbsp; Alma Mater &nbsp; ⬥</div>
-        <h2>Once a Knight,<br><em>Always a Knight</em></h2>
-        <p>
-          From the TΔΚ house to the rink — Clarkson shaped the man
-          we're all here to celebrate. The brotherhood forged there
-          never fades, and nothing beats watching a great hockey game
-          with the people you love.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 7: PHOTO PLACEHOLDER 3 -->
-  <div class="slide slide-photo" data-duration="7000">
-    <div class="photo-placeholder">
-      <div class="placeholder-icon">📷</div>
-      <div style="font-size:1.3rem; color:rgba(201,149,42,0.5);">[ Add Your Photo Here ]</div>
-      <div class="placeholder-instructions">Replace this slide's background with a Clarkson or hockey photo</div>
-    </div>
-    <div class="caption-box">
-      <div class="caption-year">THE COLLEGE YEARS</div>
-      <div class="caption-text">Clarkson University — Golden Knights forever</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 8: FAMILY QUOTE -->
-  <div class="slide slide-family" data-duration="9000">
-    <div class="family-quote">
-      The best things in life aren't things at all —
-      they're the people gathered around you.
-    </div>
-    <div class="family-sub">⬥ &nbsp; Here's to family &nbsp; ⬥</div>
-  </div>
-
-  <!-- SLIDE 9: PHOTO PLACEHOLDER 4 -->
-  <div class="slide slide-photo" data-duration="7000">
-    <div class="photo-placeholder">
-      <div class="placeholder-icon">📷</div>
-      <div style="font-size:1.3rem; color:rgba(201,149,42,0.5);">[ Add Your Photo Here ]</div>
-      <div class="placeholder-instructions">Great spot for a group family photo</div>
-    </div>
-    <div class="caption-box">
-      <div class="caption-year">FAMILY MOMENTS</div>
-      <div class="caption-text">Every memory, a treasure</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 10: TRIBUTE -->
-  <div class="slide slide-tribute" data-duration="10000">
-    <div class="stripe-bar top"></div>
-    <div class="stripe-bar bottom"></div>
-    <div class="tribute-content">
-      <div class="tribute-label">⬥ &nbsp; A Tribute &nbsp; ⬥</div>
-      <h2 class="tribute-title">
-        To the man who showed us<br>
-        <span>what it means to show up</span>
-      </h2>
-      <div class="divider" style="margin:0 auto 28px;">
-        <div class="divider-line"></div>
-        <div class="divider-diamond"></div>
-        <div class="divider-line"></div>
-      </div>
-      <p class="tribute-body">
-        Whether it was cheering from the stands, sitting in the bleachers at Clarkson,
-        or simply being there — you were always there. That's what we'll remember most.
-        Not the occasions, but the presence.
-        <br><br>
-        Happy 75th. We love you.
-      </p>
-    </div>
-  </div>
-
-  <!-- SLIDE 11: PHOTO PLACEHOLDER 5 -->
-  <div class="slide slide-photo" data-duration="7000">
-    <div class="photo-placeholder">
-      <div class="placeholder-icon">📷</div>
-      <div style="font-size:1.3rem; color:rgba(201,149,42,0.5);">[ Add Your Photo Here ]</div>
-      <div class="placeholder-instructions">A great spot for a recent photo of him</div>
-    </div>
-    <div class="caption-box">
-      <div class="caption-year">TODAY</div>
-      <div class="caption-text">75 years young</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 12: FINALE -->
-  <div class="slide slide-title" data-duration="10000">
-    <div class="beer-rings">
-      <div class="ring" style="width:500px;height:500px;top:-150px;right:-150px;"></div>
-      <div class="ring" style="width:350px;height:350px;bottom:50px;left:50px;"></div>
-    </div>
-    <div style="position:relative;z-index:2;text-align:center;">
-      <div class="subtitle" style="font-size:clamp(1rem,2.5vw,1.8rem);margin-bottom:20px;">🍺 &nbsp; Raise a glass &nbsp; 🍺</div>
-      <div class="name-line" style="font-size:clamp(3rem,8vw,7rem);">Happy 75th</div>
-      <div class="divider" style="margin:20px auto;">
-        <div class="divider-line"></div>
-        <div class="divider-diamond"></div>
-        <div class="divider-line"></div>
-      </div>
-      <div class="subtitle">Here's to the next chapter</div>
-      <div class="date-line" style="margin-top:24px;">🦬 Bills Mafia &nbsp;|&nbsp; 🏒 Golden Knights &nbsp;|&nbsp; 👨‍👩‍👧‍👦 Family Always</div>
-    </div>
-  </div>
-
-</div>
+<div id="slideshow"></div>
 
 <script>
+// ── CONFIG ──────────────────────────────────────────────────────────
+const GITHUB_USER = 'dapiup';
+const GITHUB_REPO = 'jp-75th';
+const PHOTO_DURATION = 6000;  // ms per photo
+const WORD_SLIDE_DURATION = 9000; // ms for word slides
+
+// Photo sections: order matters — this is the order they appear in the show
+// label = caption shown on screen, folder = subfolder inside /photos/
+const PHOTO_SECTIONS = [
+  { folder: 'early-life',   label: 'EARLY YEARS',       caption: 'Where it all began…' },
+  { folder: 'clarkson-tdk', label: 'CLARKSON YEARS',    caption: 'Go Golden Knights' },
+  { folder: 'bills',        label: 'BILLS MAFIA',        caption: 'Forever a fan' },
+  { folder: 'family',       label: 'FAMILY',             caption: 'The people who made it all worthwhile' },
+  { folder: 'recent',       label: 'TODAY',              caption: '75 years young' },
+];
+
+// ── WORD SLIDES (HTML strings) ───────────────────────────────────────
+const WORD_SLIDES = {
+  title: `
+    <div class="slide slide-title" data-duration="${WORD_SLIDE_DURATION}">
+      <div class="beer-rings">
+        <div class="ring" style="width:400px;height:400px;top:-100px;left:-100px;"></div>
+        <div class="ring" style="width:600px;height:600px;top:200px;right:-200px;"></div>
+        <div class="ring" style="width:250px;height:250px;bottom:50px;left:200px;"></div>
+      </div>
+      <div style="position:relative;z-index:2;text-align:center;">
+        <div class="main-number">75</div>
+        <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+        <div class="subtitle">Celebrating a Life Well Lived</div>
+        <div class="name-line">Happy Birthday, JP</div>
+        <div class="date-line">🍺 &nbsp; Pour one out for 75 years &nbsp; 🍺</div>
+      </div>
+    </div>`,
+
+  facts: `
+    <div class="slide slide-facts" data-duration="${WORD_SLIDE_DURATION}">
+      <div class="facts-grid">
+        <div class="fact-cell highlight"><div class="fact-icon">🎂</div><div class="fact-number">75</div><div class="fact-label">Years of stories,<br>wisdom & laughs</div></div>
+        <div class="fact-cell"><div class="fact-icon">🏒</div><div class="fact-number">TΔΚ</div><div class="fact-label">Tau Delta Kappa<br>Clarkson Golden Knights</div></div>
+        <div class="fact-cell highlight"><div class="fact-icon">🏈</div><div class="fact-number">1</div><div class="fact-label">True Bills fan —<br>through it all</div></div>
+        <div class="fact-cell"><div class="fact-icon">🍺</div><div class="fact-number">∞</div><div class="fact-label">Cold ones shared<br>with good people</div></div>
+        <div class="fact-cell highlight"><div class="fact-icon">👨‍👩‍👧‍👦</div><div class="fact-number">1st</div><div class="fact-label">The greatest gift:<br>family, all together</div></div>
+        <div class="fact-cell"><div class="fact-icon">🎉</div><div class="fact-number">75</div><div class="fact-label">Reasons to celebrate<br>tonight</div></div>
+      </div>
+    </div>`,
+
+  bills: `
+    <div class="slide slide-bills" data-duration="${WORD_SLIDE_DURATION}">
+      <div class="bills-stripe top"></div>
+      <div class="bills-stripe bottom"></div>
+      <div class="bills-content">
+        <span class="bills-emoji">🦬</span>
+        <h2>Bills Mafia Forever</h2>
+        <p>Through the highs, the heartbreaks, and every fourth-quarter comeback — a Bills fan's loyalty is a rare and beautiful thing. This one never wavered.</p>
+      </div>
+    </div>`,
+
+  clarkson: `
+    <div class="slide slide-clarkson" data-duration="${WORD_SLIDE_DURATION}">
+      <div class="puck-pattern"></div>
+      <div class="clarkson-content">
+        <div class="clarkson-badge">
+          <div class="badge-emoji">🏒</div>
+          <div class="badge-text">CLARKSON</div>
+          <div class="badge-sub">GOLDEN KNIGHTS</div>
+        </div>
+        <div class="clarkson-right">
+          <div class="section-tag">⬥ &nbsp; Alma Mater &nbsp; ⬥</div>
+          <h2>Once a Knight,<br><em>Always a Knight</em></h2>
+          <p>From the TΔΚ house to the rink — Clarkson shaped the man we're all here to celebrate. The brotherhood forged there never fades, and nothing beats watching a great hockey game with the people you love.</p>
+        </div>
+      </div>
+    </div>`,
+
+  family: `
+    <div class="slide slide-family" data-duration="${WORD_SLIDE_DURATION}">
+      <div class="family-quote">The best things in life aren't things at all — they're the people gathered around you.</div>
+      <div class="family-sub">⬥ &nbsp; Here's to family &nbsp; ⬥</div>
+    </div>`,
+
+  tribute: `
+    <div class="slide slide-tribute" data-duration="${WORD_SLIDE_DURATION + 2000}">
+      <div class="stripe-bar top"></div>
+      <div class="stripe-bar bottom"></div>
+      <div class="tribute-content">
+        <div class="tribute-label">⬥ &nbsp; A Tribute &nbsp; ⬥</div>
+        <h2 class="tribute-title">To the man who showed us<br><span>what it means to show up</span></h2>
+        <div class="divider" style="margin:0 auto 28px;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+        <p class="tribute-body">
+          Whether it was cheering from the stands, sitting in the bleachers at Clarkson,
+          or simply being there — you were always there. That's what we'll remember most.
+          Not the occasions, but the presence.<br><br>
+          Happy 75th. We love you.
+        </p>
+      </div>
+    </div>`,
+
+  finale: `
+    <div class="slide slide-title" data-duration="${WORD_SLIDE_DURATION + 2000}">
+      <div class="beer-rings">
+        <div class="ring" style="width:500px;height:500px;top:-150px;right:-150px;"></div>
+        <div class="ring" style="width:350px;height:350px;bottom:50px;left:50px;"></div>
+      </div>
+      <div style="position:relative;z-index:2;text-align:center;">
+        <div class="subtitle" style="font-size:clamp(1rem,2.5vw,1.8rem);margin-bottom:20px;">🍺 &nbsp; Raise a glass &nbsp; 🍺</div>
+        <div class="name-line" style="font-size:clamp(3rem,8vw,7rem);">Happy 75th</div>
+        <div class="divider" style="margin:20px auto;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+        <div class="subtitle">Here's to the next chapter</div>
+        <div class="date-line" style="margin-top:24px;">🦬 Bills Mafia &nbsp;|&nbsp; 🏒 Golden Knights &nbsp;|&nbsp; 👨‍👩‍👧‍👦 Family Always</div>
+      </div>
+    </div>`,
+};
+
+// ── GITHUB API FETCH ─────────────────────────────────────────────────
+async function fetchPhotosFromFolder(folder) {
+  const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/photos/${folder}`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const files = await res.json();
+    return files
+      .filter(f => /\.(jpe?g|png|gif|webp)$/i.test(f.name))
+      .map(f => f.download_url);
+  } catch { return []; }
+}
+
+// ── BUILD SLIDESHOW ──────────────────────────────────────────────────
+function makePhotoSlide(url, section, index, total) {
+  return `
+    <div class="slide slide-photo" data-duration="${PHOTO_DURATION}">
+      <div class="photo-bg" style="background-image:url('${url}')"></div>
+      <div class="photo-count-badge">${index + 1} / ${total}</div>
+      <div class="caption-box">
+        <div class="caption-year">${section.label}</div>
+        <div class="caption-text">${section.caption}</div>
+      </div>
+    </div>`;
+}
+
+function makeSectionIntro(section) {
+  return `
+    <div class="slide slide-section-intro" data-duration="4000">
+      <div class="section-intro-label">⬥ &nbsp; Now Showing &nbsp; ⬥</div>
+      <div class="section-intro-title">${section.caption}</div>
+      <div class="section-intro-sub">${section.label}</div>
+    </div>`;
+}
+
+async function buildShow() {
+  // Fetch all photo folders in parallel
+  const photoLists = await Promise.all(
+    PHOTO_SECTIONS.map(s => fetchPhotosFromFolder(s.folder))
+  );
+
+  const container = document.getElementById('slideshow');
+  const slideOrder = [];
+
+  // ── SEQUENCE ────────────────────────────────────────────────────
+  // Opening
+  slideOrder.push(WORD_SLIDES.title);
+  slideOrder.push(WORD_SLIDES.facts);
+
+  // Early Life photos → Bills word slide → Bills photos
+  const earlyPhotos = photoLists[0];
+  if (earlyPhotos.length) {
+    earlyPhotos.forEach((url, i) => slideOrder.push(makePhotoSlide(url, PHOTO_SECTIONS[0], i, earlyPhotos.length)));
+  }
+
+  slideOrder.push(WORD_SLIDES.bills);
+
+  const billsPhotos = photoLists[2];
+  if (billsPhotos.length) {
+    billsPhotos.forEach((url, i) => slideOrder.push(makePhotoSlide(url, PHOTO_SECTIONS[2], i, billsPhotos.length)));
+  }
+
+  // Clarkson word slide → Clarkson photos
+  slideOrder.push(WORD_SLIDES.clarkson);
+
+  const clarksonPhotos = photoLists[1];
+  if (clarksonPhotos.length) {
+    clarksonPhotos.forEach((url, i) => slideOrder.push(makePhotoSlide(url, PHOTO_SECTIONS[1], i, clarksonPhotos.length)));
+  }
+
+  // Family quote → Family photos
+  slideOrder.push(WORD_SLIDES.family);
+
+  const familyPhotos = photoLists[3];
+  if (familyPhotos.length) {
+    familyPhotos.forEach((url, i) => slideOrder.push(makePhotoSlide(url, PHOTO_SECTIONS[3], i, familyPhotos.length)));
+  }
+
+  // Recent photos
+  const recentPhotos = photoLists[4];
+  if (recentPhotos.length) {
+    recentPhotos.forEach((url, i) => slideOrder.push(makePhotoSlide(url, PHOTO_SECTIONS[4], i, recentPhotos.length)));
+  }
+
+  // Closing
+  slideOrder.push(WORD_SLIDES.tribute);
+  slideOrder.push(WORD_SLIDES.finale);
+
+  // Inject all slides
+  container.innerHTML = slideOrder.join('');
+
+  // Hide loading screen
+  const loading = document.getElementById('loading');
+  loading.classList.add('hidden');
+  setTimeout(() => loading.remove(), 1200);
+
+  // Start the show
+  initShow();
+}
+
+// ── SHOW CONTROLLER ──────────────────────────────────────────────────
+function initShow() {
   const slides = document.querySelectorAll('.slide');
   const progressBar = document.getElementById('progress-bar');
   const counter = document.getElementById('slide-counter');
@@ -780,19 +636,17 @@
 
   function showSlide(index) {
     slides[current].classList.remove('active');
-    current = (index + slides.length) % slides.length;
+    current = ((index % slides.length) + slides.length) % slides.length;
     slides[current].classList.add('active');
 
-    const duration = parseInt(slides[current].dataset.duration) || 7000;
+    const duration = parseInt(slides[current].dataset.duration) || PHOTO_DURATION;
     counter.textContent = `${current + 1} / ${slides.length}`;
 
-    // Progress bar
     clearInterval(progressTimer);
     progressStart = Date.now();
     progressBar.style.width = '0%';
     progressTimer = setInterval(() => {
-      const elapsed = Date.now() - progressStart;
-      const pct = Math.min((elapsed / duration) * 100, 100);
+      const pct = Math.min(((Date.now() - progressStart) / duration) * 100, 100);
       progressBar.style.width = pct + '%';
     }, 50);
 
@@ -800,7 +654,6 @@
     timer = setTimeout(() => showSlide(current + 1), duration);
   }
 
-  // Keyboard nav
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') showSlide(current + 1);
     if (e.key === 'ArrowLeft') showSlide(current - 1);
@@ -810,10 +663,13 @@
     }
   });
 
-  // Touch/click nav
   document.addEventListener('click', () => showSlide(current + 1));
 
   showSlide(0);
+}
+
+// ── KICK IT OFF ──────────────────────────────────────────────────────
+buildShow();
 </script>
 </body>
 </html>
