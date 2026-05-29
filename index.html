@@ -542,7 +542,8 @@ async function fetchPhotosFromFolder(folder) {
     const files = await res.json();
     return files
       .filter(f => /\.(jpe?g|png|gif|webp)$/i.test(f.name))
-      .map(f => f.download_url);
+      .map(f => f.download_url)
+      .sort(() => Math.random() - 0.5);
   } catch { return []; }
 }
 
