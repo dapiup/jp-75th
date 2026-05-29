@@ -420,8 +420,8 @@ const WORD_SLIDE_DURATION = 9000; // ms for word slides
 // Photo sections: order matters — this is the order they appear in the show
 // label = caption shown on screen, folder = subfolder inside /photos/
 const PHOTO_SECTIONS = [
-  { folder: 'early-life',   label: 'EARLY YEARS',       caption: 'Where it all began…' },
-  { folder: 'clarkson-tdk', label: 'CLARKSON YEARS',    caption: 'Go Golden Knights' },
+  { folder: 'early-life',   label: 'EARLY YEARS',       caption: 'A blast from the past' },
+  { folder: 'clarkson-tdk', label: 'CLARKSON',          caption: 'Go Golden Knights' },
   { folder: 'bills',        label: 'BILLS MAFIA',        caption: 'Forever a fan' },
   { folder: 'family',       label: 'FAMILY',             caption: 'The people who made it all worthwhile' },
   { folder: 'recent',       label: 'TODAY',              caption: '75 years young' },
@@ -508,6 +508,15 @@ const WORD_SLIDES = {
       </div>
     </div>`,
 
+  today: `
+    <div class="slide slide-family" data-duration="${WORD_SLIDE_DURATION + 2000}">
+      <div class="family-quote">
+        Today you're known as JP, Papa, Dad, Brother, Friend, and many other names —
+        but the constant is that everyone who knows you loves you for who you are.
+      </div>
+      <div class="family-sub">⬥ &nbsp; Here's to you, JP &nbsp; ⬥</div>
+    </div>`,
+
   finale: `
     <div class="slide slide-title" data-duration="${WORD_SLIDE_DURATION + 2000}">
       <div class="beer-rings">
@@ -587,7 +596,9 @@ async function buildShow() {
     clarksonPhotos.forEach((url, i) => slideOrder.push(makePhotoSlide(url, PHOTO_SECTIONS[1], i, clarksonPhotos.length)));
   }
 
-  // Recent photos
+  // Today intro slide → Recent photos
+  slideOrder.push(WORD_SLIDES.today);
+
   const recentPhotos = photoLists[4];
   if (recentPhotos.length) {
     recentPhotos.forEach((url, i) => slideOrder.push(makePhotoSlide(url, PHOTO_SECTIONS[4], i, recentPhotos.length)));
